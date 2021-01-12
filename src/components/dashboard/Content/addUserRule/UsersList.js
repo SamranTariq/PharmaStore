@@ -1,10 +1,63 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
-import AddUserRule from "./AddUserRule";
 import { connect } from "react-redux";
-import { hideListUsers } from "../../../../actions/dashboardAction";
-
+import {
+  showEditUserForm,
+  showUserRoleList,
+} from "../../../../actions/dashboardAction";
+var id;
 class UsersList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userList: null,
+      getUserLists: this.getUserLists.bind(this),
+    };
+  }
+  /********Get UserLists********/
+  getUserLists = () => {
+    this.props.showUserRoleList();
+    // console.log("jgjdfks");
+  };
+  componentDidMount() {
+    return this.getUserLists();
+  }
+  renderUsersList = (userInfo, index) => {
+    // console.log(userInfo);
+    if (userInfo.displayUser) {
+      return (
+        <tr key={index}>
+          <td style={{ textAlign: "left" }}>
+            {userInfo.firstName + " " + userInfo.lastName}
+          </td>
+          <td>{userInfo.userRole}</td>
+          <td>{userInfo.userStatus}</td>
+          <td>{userInfo.userisAdmin[0] ? "Yes" : "Not"}</td>
+          <td>
+            <Button
+              color="primary"
+              onClick={() =>
+                this.props.showEditUserForm(userInfo.userRoleId[0])
+              }
+              size="sm"
+            >
+              <i className="fas fa-edit" style={{ marginRight: "5px" }} />
+              Edit
+            </Button>
+            <Button
+              color="danger"
+              style={{ marginLeft: "8px" }}
+              onClick={((e) => e.preventDefault(), console.log())}
+              size="sm"
+            >
+              <i className="fas fa-delete" style={{ marginRight: "5px" }} />
+              Delete
+            </Button>
+          </td>
+        </tr>
+      );
+    }
+  };
   render() {
     return (
       <div>
@@ -13,20 +66,6 @@ class UsersList extends Component {
             <div className="card">
               <div className="card-header bg-secondary">
                 <h3 className="card-title">User List</h3>
-                <button
-                  type="button"
-                  class="btn btn-tool"
-                  style={{
-                    float: "right",
-                    marginTop: "0px",
-                    marginBottom: "2px",
-                  }}
-                  onClick={() => {
-                    this.props.hideListUsers();
-                  }}
-                >
-                  <i class="fas fa-times"></i>
-                </button>
               </div>
               {/* /.card-header */}
               <div className="card-body">
@@ -34,132 +73,18 @@ class UsersList extends Component {
                   <thead>
                     <tr>
                       <th style={{ width: 10 }}>Id</th>
-                      <th style={{ width: 35 }}>Name</th>
-                      <th style={{ width: 35 }}>Slug</th>
+                      <th style={{ width: 15 }}>Name</th>
+                      <th style={{ width: 25 }}>Slug</th>
+                      <th style={{ width: 35 }}>isAdmin</th>
                       <th style={{ width: 40 }}>Edit</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Super Admin</td>
-                      <td>Super Admin</td>
-                      <td>
-                        <Button
-                          color="primary"
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-edit"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Edit
-                        </Button>
-                        <Button
-                          color="danger"
-                          style={{ marginLeft: "8px" }}
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-delete"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>2.</td>
-                      <td>Admin</td>
-                      <td>Admin</td>
-                      <td>
-                        <Button
-                          color="primary"
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-edit"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Edit
-                        </Button>
-                        <Button
-                          color="danger"
-                          style={{ marginLeft: "8px" }}
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-delete"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3.</td>
-                      <td>User</td>
-                      <td>User</td>
-                      <td>
-                        <Button
-                          color="primary"
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-edit"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Edit
-                        </Button>
-                        <Button
-                          color="danger"
-                          style={{ marginLeft: "8px" }}
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-delete"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4.</td>
-                      <td>Staff</td>
-                      <td>Staff</td>
-                      <td>
-                        <Button
-                          color="primary"
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-edit"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Edit
-                        </Button>
-                        <Button
-                          color="danger"
-                          style={{ marginLeft: "8px" }}
-                          onClick={((e) => e.preventDefault(), console.log())}
-                          size="sm"
-                        >
-                          <i
-                            className="fas fa-delete"
-                            style={{ marginRight: "5px" }}
-                          />
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
+                    {this.props.dashboard.userRoleList
+                      ? this.props.dashboard.userRoleList.map(
+                          this.renderUsersList
+                        )
+                      : console.log("null")}
                   </tbody>
                 </table>
               </div>
@@ -206,4 +131,6 @@ const mapStateToProps = (state) => {
     dashboard: state.dashboard,
   };
 };
-export default connect(mapStateToProps, { hideListUsers })(UsersList);
+export default connect(mapStateToProps, { showEditUserForm, showUserRoleList })(
+  UsersList
+);

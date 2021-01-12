@@ -3,8 +3,15 @@ import { Link } from "react-router-dom";
 import logo from "../../../assets/img/logo512.png";
 class Sidebar extends Component {
   addUserRoleClicked = () => {
-    console.log(this.props);
+    // console.log(this.props);
     this.props.history.push("/admin/dashboard/adduserrole");
+  };
+  addUserClicked = () => {
+    // console.log(this.props);
+    this.props.history.push("/admin/dashboard/adduser");
+  };
+  userListClicked = () => {
+    this.props.history.push("/admin/dashboard/userlist");
   };
   render() {
     return (
@@ -92,13 +99,21 @@ class Sidebar extends Component {
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a href="./index2.html" className="nav-link">
+                      <a
+                        style={{ cursor: "pointer" }}
+                        onClick={this.addUserClicked}
+                        className="nav-link"
+                      >
                         <i className="fa fa-user-plus" />
                         <p>Add Users</p>
                       </a>
                     </li>
                     <li className="nav-item">
-                      <a href="./index3.html" className="nav-link">
+                      <a
+                        style={{ cursor: "pointer" }}
+                        onClick={this.userListClicked}
+                        className="nav-link"
+                      >
                         <i className="fa fa-list" />
                         <p>User List</p>
                       </a>
